@@ -1,0 +1,251 @@
+/* Configurações globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #048a23;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 20px;
+}
+
+header {
+    width: 100%;
+    text-align: center;
+    background-color: #01923d;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.texto {
+    color: white;
+}
+.container{
+    margin-bottom: 10px;
+    margin-top: 5px;
+    
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.logo-container p {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Container do cadastro */
+.cadastro-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+    
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #048a23;
+}
+
+/* Estilo dos campos */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #048a23;
+    outline: none;
+}
+
+/* Botão estilizado */
+button {
+    width: 100%;
+    padding: 10px;
+    background: #048a23;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #03731c;
+}
+
+/* Mensagem de erro */
+.erro {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Estilos Responsivos */
+
+/* Para telas maiores que 1200px (PCs grandes e notebooks) */
+@media (min-width: 1200px) {
+    .cadastro-container {
+        max-width: 500px;
+        padding: 40px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    input {
+        font-size: 18px;
+    }
+
+    button {
+        font-size: 18px;
+    }
+}
+
+/* Para telas entre 768px e 1200px (Notebooks e Tablets) */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .cadastro-container {
+        max-width: 80%;
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    input {
+        font-size: 16px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+}
+
+/* Para telas entre 480px e 768px (Tablets e dispositivos com tela média) */
+@media (min-width: 480px) and (max-width: 767px) {
+    .cadastro-container {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+    .texto, 
+    .logo-container img:first-child { 
+        display: none;}
+}
+
+/* Para telas menores que 480px (Celulares) */
+@media (max-width: 479px) {
+    .cadastro-container {
+        max-width: 95%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
+.remove-btn {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 6px;
+    line-height: 1;
+    height: 18px;
+    width: 18px;
+  }
+  .remove-btn:hover {
+    color: #ffcccc;
+  }
+
+  .disciplinas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+  .disciplina-item {
+    background:  #03731c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    height: 30px; /* Garantir que os itens tenham uma altura consistente */
+  }
+  .button{
+    
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    
+    color: white;
+    background-color: #048a23;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+    border: 2px solid transparent;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
