@@ -1,14 +1,15 @@
 <?php
-$host = "seu-banco-de-dados.render.com";  // Substitua pelo host do banco de dados fornecido pelo Render
-$usuario = "seu-usuario";                 // Usuário do banco de dados fornecido pelo Render
-$senha = "sua-senha";                     // Senha do banco de dados fornecida pelo Render
-$banco = "ocorrencias";                   // Nome do banco de dados
+$host = "dpg-d02kpdidbo4c73eufbt0-a"; // Hostname que tu pegou na Render
+$port = "5432";
+$dbname = "ocorrencias";
+$user = "ocorrencias_user";
+$pass = "SUA_SENHA_AQUI"; // substitui por tua senha real
 
-// Criar conexão
-$conn = new mysqli($host, $usuario, $senha, $banco);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Erro na conexão: " . $conn->connect_error);
+try {
+    $conn = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // echo "Conexão bem-sucedida!";
+} catch (PDOException $e) {
+    die("Erro na conexão: " . $e->getMessage());
 }
 ?>
