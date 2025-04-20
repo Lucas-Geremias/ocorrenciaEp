@@ -6,20 +6,27 @@ if (isset($_POST['ocorrencia_id'], $_POST['data_recebimento'], $_POST['responsav
     $data_recebimento = $_POST['data_recebimento'];
     $responsavel = $_POST['responsavel'];
 
-    // Registrar o recebimento na tabela Coordenacao
-    $stmt = $conn->prepare("INSERT INTO Coordenacao (ocorrencia_id, data_recebimento, responsavel_recebimento) VALUES (?, ?, ?)");
-    $stmt->bind_param("iss", $ocorrencia_id, $data_recebimento, $responsavel);
+    try {
+        // Iniciar transação
+        $conn->beginTransaction();
 
-    if ($stmt->execute()) {
+        // Registrar o recebimento na tabela Coordenacao
+        $stmt = $conn->prepare("INSERT INTO Coordenacao (ocorrencia_id, data_recebimento, responsavel_recebimento) VALUES (?, ?, ?)");
+        $stmt->execute([$ocorrencia_id, $data_recebimento, $responsavel]);
+
         // Atualizar o status da ocorrência para "Concluído"
         $update_stmt = $conn->prepare("UPDATE Ocorrencia SET status = 'Concluído' WHERE id = ?");
-        $update_stmt->bind_param("i", $ocorrencia_id);
-        $update_stmt->execute();
+        $update_stmt->execute([$ocorrencia_id]);
 
-        header("Location: coordenacao.php"); // Redireciona para a página principal
+        // Confirmar transação
+        $conn->commit();
+
+        header("Location: coordenacao.php");
         exit();
-    } else {
-        echo "Erro ao registrar o recebimento: " . $conn->error;
+    } catch (PDOException $e) {
+        // Reverter em caso de erro
+        $conn->rollBack();
+        echo "Erro ao registrar o recebimento: " . $e->getMessage();
     }
 } else {
     echo "Erro: Todos os campos são obrigatórios.";

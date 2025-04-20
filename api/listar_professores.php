@@ -4,6 +4,11 @@ include 'conexao.php'; // Conexão com o banco de dados
 // Consulta para buscar todos os professores
 $query = "SELECT id, nome, email_institucional, cpf, disciplina FROM Professor";
 $result = $conn->query($query);
+
+// Verifica se a consulta foi bem-sucedida
+if (!$result) {
+    die("Erro ao recuperar dados: " . $conn->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +33,9 @@ $result = $conn->query($query);
     </header>
 
     <div class="container">
-    <a href="/ocorrenciamain/public/geral.html" class="btn btn-warning btn-xs">
-    <button>Voltar</button></a>
+        <a href="/ocorrenciamain/public/geral.html" class="btn btn-warning btn-xs">
+            <button>Voltar</button>
+        </a>
         <h1>Lista de Professores</h1>
         <table>
             <thead>

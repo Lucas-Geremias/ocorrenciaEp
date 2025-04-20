@@ -1,34 +1,37 @@
 <?php
-include 'conexao.php';
+include 'conexao.php'; // Esse arquivo deve criar a conexão PDO e armazenar em $conn
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Criptografar senha
-    $admin = 1; // Definir como administrador
+    $nome = $_POST['nome'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $senha = password_hash($_POST['senha'] ?? '', PASSWORD_DEFAULT);
+    $admin = 1;
 
-    // Verificar se o email já está cadastrado
-    $query = "SELECT id FROM Coordenador WHERE email = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if (empty($nome) || empty($email) || empty($_POST['senha'])) {
+        echo "Todos os campos são obrigatórios!";
+        exit();
+    }
 
-    if ($result->num_rows > 0) {
-        echo "Este email já está cadastrado!";
-    } else {
-        // Inserir no banco de dados
-        $query = "INSERT INTO Coordenador (nome, email, senha, admin) VALUES (?, ?, ?, ?)";
+    try {
+        // Verificar se o email já está cadastrado
+        $query = "SELECT id FROM Coordenador WHERE email = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssi", $nome, $email, $senha, $admin);
+        $stmt->execute([$email]);
 
-        if ($stmt->execute()) {
-            echo "Cadastro realizado com sucesso!";
-            header("Location: /ocorrenciamain/public/geral.html"); // Redirecionar para login
-            exit();
+        if ($stmt->rowCount() > 0) {
+            echo "Este email já está cadastrado!";
         } else {
-            echo "Erro ao cadastrar.";
+            // Inserir novo coordenador
+            $query = "INSERT INTO Coordenador (nome, email, senha, admin) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->execute([$nome, $email, $senha, $admin]);
+
+            echo "Cadastro realizado com sucesso!";
+            header("Location: /ocorrenciamain/public/geral.html");
+            exit();
         }
+    } catch (PDOException $e) {
+        echo "Erro ao cadastrar: " . $e->getMessage();
     }
 }
 ?>
