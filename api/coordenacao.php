@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php';
+include '../conexao.php';
 
 // Buscar ocorrências que ainda não foram recebidas pela coordenação
 $query = "SELECT o.id, o.estudante, o.aula, o.situacao, o.turma, p.nome AS professor, o.data, o.descricao 

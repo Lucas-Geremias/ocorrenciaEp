@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php'; // Arquivo de conexão com o banco
+include '../conexao.php'; // Arquivo de conexão com o banco
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Pegando os dados do formulário

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexao.php'; // Conexão com PDO
+include '../conexao.php'; // Conexão com PDO
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];

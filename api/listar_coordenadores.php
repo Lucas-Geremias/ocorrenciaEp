@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php'; // Conexão com o banco de dados
+include '../conexao.php'; // Conexão com o banco de dados
 
 // Consulta para buscar todos os coordenadores
 $query = "SELECT id, nome, email FROM Coordenador";

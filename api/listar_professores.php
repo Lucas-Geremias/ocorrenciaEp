@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php'; // Conexão com o banco de dados
+include '../conexao.php'; // Conexão com o banco de dados
 
 // Verifica se a conexão foi bem-sucedida
 if (!$conn) {

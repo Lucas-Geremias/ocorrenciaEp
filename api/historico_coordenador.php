@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php';
+include '../conexao.php';
 
 // Verifica se a coluna 'status' existe na tabela Ocorrencia
 $verifica_coluna = "SHOW COLUMNS FROM Ocorrencia LIKE 'status'";

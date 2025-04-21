@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php';
+include '../conexao.php';
 
 // Verifica se um ID foi passado na URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {

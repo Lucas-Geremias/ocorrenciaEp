@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php'; // Esse arquivo deve criar a conexão PDO e armazenar em $conn
+include '../conexao.php'; // Esse arquivo deve criar a conexão PDO e armazenar em $conn
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'] ?? '';

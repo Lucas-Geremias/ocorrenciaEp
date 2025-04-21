@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php';
+include '../conexao.php';
 
 if (isset($_POST['ocorrencia_id'], $_POST['data_recebimento'], $_POST['responsavel'])) {
     $ocorrencia_id = $_POST['ocorrencia_id'];
