@@ -1,15 +1,12 @@
-<?php
-$host = "dpg-d02kpdidbo4c73eufbt0-a"; // Hostname que tu pegou na Render
-$port = "5432";
-$dbname = "ocorrencias";
-$user = "ocorrencias_user";
-$pass = "SUA_SENHA_AQUI"; // substitui por tua senha real
+$host = getenv("DB_HOST");
+$port = getenv("DB_PORT");
+$dbname = getenv("DB_NAME");
+$user = getenv("DB_USER");
+$pass = getenv("DB_PASS");
 
 try {
     $conn = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // echo "Conexão bem-sucedida!";
 } catch (PDOException $e) {
     die("Erro na conexão: " . $e->getMessage());
 }
-?>
