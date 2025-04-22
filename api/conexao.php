@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/php/vendor/autoload.php';
 
-  // Carrega o autoload do Composer
+
 
 use Dotenv\Dotenv;
 
