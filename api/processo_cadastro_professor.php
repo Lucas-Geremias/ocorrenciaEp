@@ -1,5 +1,6 @@
 <?php
 session_start(); // Inicia a sessão para uso do CSRF e variáveis globais
+include __DIR__ . '/conexao.php'; // Conexão com o banco de dados
 
 // Conectar ao banco de dados com variáveis de ambiente
 $host = getenv("DB_HOST");

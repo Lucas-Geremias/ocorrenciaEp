@@ -1,18 +1,13 @@
 <?php
-include '../conexao.php'; // Conexão com o banco de dados
+include __DIR__ . '/conexao.php'; // Conexão com o banco de dados usando PDO
 
-// Verifica se a conexão foi bem-sucedida
-if (!$conn) {
-    die("Erro na conexão com o banco de dados: " . mysqli_connect_error());
-}
-
-// Consulta para buscar todos os professores
-$query = "SELECT id, nome, email_institucional, cpf, disciplina FROM Professor";
-$result = $conn->query($query);
-
-// Verifica se a consulta foi bem-sucedida
-if (!$result) {
-    die("Erro ao recuperar dados: " . $conn->error);
+try {
+    // Consulta para buscar todos os professores
+    $query = "SELECT id, nome, email_institucional, cpf, disciplina FROM Professor";
+    $stmt = $conn->query($query);
+    $professores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erro ao recuperar dados: " . $e->getMessage());
 }
 ?>
 
@@ -54,8 +49,8 @@ if (!$result) {
             </thead>
             <tbody>
                 <?php 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) { 
+                if (count($professores) > 0) {
+                    foreach ($professores as $row) {
                 ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['nome'], ENT_QUOTES, 'UTF-8'); ?></td>

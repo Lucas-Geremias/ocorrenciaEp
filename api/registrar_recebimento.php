@@ -1,5 +1,6 @@
 <?php
-include '../conexao.php';
+include __DIR__ . '/conexao.php'; // Conexão com o banco de dados
+
 
 if (isset($_POST['ocorrencia_id'], $_POST['data_recebimento'], $_POST['responsavel'])) {
     $ocorrencia_id = $_POST['ocorrencia_id'];

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../conexao.php'; // Inclua seu arquivo de conexão PDO
+include __DIR__ . '/conexao.php'; // Inclua seu arquivo de conexão PDO
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];

@@ -1,9 +1,14 @@
 <?php
-include '../conexao.php'; // Conexão com o banco de dados
+include __DIR__ . '/conexao.php'; // Conexão com o banco de dados usando PDO
 
-// Consulta para buscar todos os coordenadores
-$query = "SELECT id, nome, email FROM Coordenador";
-$result = $conn->query($query);
+try {
+    // Consulta para buscar todos os coordenadores
+    $query = "SELECT id, nome, email FROM Coordenador";
+    $stmt = $conn->query($query);
+    $coordenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erro ao recuperar dados: " . $e->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +33,11 @@ $result = $conn->query($query);
     </header>
 
     <div class="container">
-    <a href="/ocorrenciamain/public/geral.html" class="btn btn-warning btn-xs">
-    <button>Voltar</button></a>
+        <a href="/ocorrenciamain/public/geral.html" class="btn btn-warning btn-xs">
+            <button>Voltar</button>
+        </a>
         <h1>Lista de Coordenadores</h1>
-        
-                </a>
+
         <table>
             <thead>
                 <tr>
@@ -42,16 +47,24 @@ $result = $conn->query($query);
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $result->fetch_assoc()) { ?>
+                <?php 
+                if (count($coordenadores) > 0) {
+                    foreach ($coordenadores as $row) {
+                ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['nome']); ?></td>
-                        <td><?php echo htmlspecialchars($row['email']); ?></td>
+                        <td><?php echo htmlspecialchars($row['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($row['email'], ENT_QUOTES, 'UTF-8'); ?></td>
                         <td>
                             <a href="editar_coordenador.php?id=<?php echo $row['id']; ?>" class="button edit-button">Alterar</a>
                             <a href="excluir_coordenador.php?id=<?php echo $row['id']; ?>" class="button delete-button" onclick="return confirm('Tem certeza que deseja excluir este coordenador?')">Excluir</a>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php 
+                    } 
+                } else {
+                    echo "<tr><td colspan='3'>Nenhum coordenador encontrado</td></tr>";
+                }
+                ?>
             </tbody>
         </table>
     </div>

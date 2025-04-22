@@ -1,17 +1,19 @@
 <?php
-include '../conexao.php';
+include __DIR__ . '/conexao.php';
 
-// Buscar ocorrências que ainda não foram recebidas pela coordenação
-$query = "SELECT o.id, o.estudante, o.aula, o.situacao, o.turma, p.nome AS professor, o.data, o.descricao 
-          FROM Ocorrencia o
-          JOIN Professor p ON o.professor_id = p.id
-          LEFT JOIN Coordenacao c ON o.id = c.ocorrencia_id
-          WHERE c.id IS NULL";
+try {
+    // Buscar ocorrências que ainda não foram recebidas pela coordenação
+    $query = "SELECT o.id, o.estudante, o.aula, o.situacao, o.turma, p.nome AS professor, o.data, o.descricao 
+              FROM Ocorrencia o
+              JOIN Professor p ON o.professor_id = p.id
+              LEFT JOIN Coordenacao c ON o.id = c.ocorrencia_id
+              WHERE c.id IS NULL";
 
-$result = $conn->query($query);
+    $stmt = $conn->query($query);
+    $ocorrencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (!$result) {
-    die("Erro na consulta: " . $conn->error);
+} catch (PDOException $e) {
+    die("Erro na consulta: " . $e->getMessage());
 }
 ?>
 
@@ -42,7 +44,7 @@ if (!$result) {
     
     <h2>Recebimento de Ocorrências</h2>
 
-    <?php if ($result->num_rows > 0) { ?>
+    <?php if (count($ocorrencias) > 0) { ?>
         <div class="table-container">
             <table>
                 <thead>
@@ -60,7 +62,7 @@ if (!$result) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = $result->fetch_assoc()) { ?>
+                    <?php foreach ($ocorrencias as $row) { ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['estudante']); ?></td>
                         <td><?php echo htmlspecialchars($row['aula']); ?></td>

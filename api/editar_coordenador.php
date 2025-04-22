@@ -1,5 +1,5 @@
 <?php
-include '../conexao.php'; // Conexão com o banco de dados
+include __DIR__ . '/conexao.php';// Conexão com o banco de dados
 
 // Verifica se o ID foi passado na URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {

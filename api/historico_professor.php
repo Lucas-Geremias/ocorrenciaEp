@@ -1,22 +1,29 @@
 <?php
-include '../conexao.php';
+include __DIR__ . '/conexao.php';
 
-// Verifica se a coluna 'status' existe na tabela Ocorrencia
-$verifica_coluna = "SHOW COLUMNS FROM Ocorrencia LIKE 'status'";
-$result_coluna = $conn->query($verifica_coluna);
+try {
+    // Verifica se a coluna 'status' existe
+    $verifica_coluna = "SHOW COLUMNS FROM Ocorrencia LIKE 'status'";
+    $stmt = $conn->query($verifica_coluna);
 
-if ($result_coluna->num_rows == 0) {
-    // Se a coluna não existir, cria ela
-    $alter_sql = "ALTER TABLE Ocorrencia ADD COLUMN status ENUM('pendente', 'andamento', 'concluido') NOT NULL DEFAULT 'pendente'";
-    $conn->query($alter_sql);
+    if ($stmt->rowCount() === 0) {
+        // Adiciona a coluna se não existir
+        $alter_sql = "ALTER TABLE Ocorrencia ADD COLUMN status ENUM('pendente', 'andamento', 'concluido') NOT NULL DEFAULT 'pendente'";
+        $conn->exec($alter_sql);
+    }
+
+    // Consulta de dados com JOIN
+    $sql = "SELECT Ocorrencia.id, Ocorrencia.estudante, Ocorrencia.situacao, Ocorrencia.data, 
+                   Professor.nome AS professor, Ocorrencia.status 
+            FROM Ocorrencia 
+            JOIN Professor ON Ocorrencia.professor_id = Professor.id";
+
+    $stmt = $conn->query($sql);
+    $ocorrencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    die("Erro no banco de dados: " . $e->getMessage());
 }
-
-// Consulta os dados
-$sql = "SELECT Ocorrencia.id, Ocorrencia.estudante, Ocorrencia.situacao, Ocorrencia.data, 
-               Professor.nome AS professor, Ocorrencia.status 
-        FROM Ocorrencia 
-        JOIN Professor ON Ocorrencia.professor_id = Professor.id";
-$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -45,22 +52,19 @@ $result = $conn->query($sql);
     <div class="tudo">
         <div class="h1-novo">
             <div class="h1-busca">
-                
-                    <button type="button" id="concluido" class="btn btn-success btn-xs">Concluído</button>
-                    <button type="button" id="pendente" class="btn btn-warning btn-xs">Pendente</button>
-                    <button type="button" class="btn btn-xs">Todos</button>
-                    <div class="btn-group"><a href="/ocorrenciamain/public/TelaOcorrencia2.html" class="btn btn-warning btn-xs">
-                    <button>Nova Ocorrência</button>
-                </a>
-                   
+                <button type="button" id="concluido" class="btn btn-success btn-xs">Concluído</button>
+                <button type="button" id="pendente" class="btn btn-warning btn-xs">Pendente</button>
+                <button type="button" class="btn btn-xs">Todos</button>
+                <div class="btn-group">
+                    <a href="/ocorrenciamain/public/TelaOcorrencia2.html" class="btn btn-warning btn-xs">
+                        <button>Nova Ocorrência</button>
+                    </a>
                 </div>
 
                 <div id="divBusca">
                     <input type="text" id="txtBusca" placeholder="Buscar...">
                     <img src="/ocorrenciamain/img/lupa.png" id="btnBusca" alt="Buscar" width="20px">
                 </div>
-            </div>
-           
             </div>
         </div>
 
@@ -77,11 +81,11 @@ $result = $conn->query($sql);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($row = $result->fetch_assoc()) { ?>
+                        <?php foreach ($ocorrencias as $row) { ?>
                         <tr>
                             <td><?php echo htmlspecialchars($row['estudante']); ?></td>
                             <td><?php echo htmlspecialchars($row['situacao']); ?></td>
-                            <td><?php echo htmlspecialchars($row['data']); ?></td>
+                            <td><?php echo date("d/m/Y", strtotime($row['data'])); ?></td>
                             <td><?php echo htmlspecialchars($row['professor']); ?></td>
                             <td data-estado="<?php echo htmlspecialchars($row['status']); ?>">
                                 <?php echo htmlspecialchars($row['status']); ?>
@@ -99,7 +103,3 @@ $result = $conn->query($sql);
 
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
