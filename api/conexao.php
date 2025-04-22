@@ -13,6 +13,12 @@ $dbname = getenv("DB_NAME");
 $user = getenv("DB_USER");
 $pass = getenv("DB_PASS");
 
+echo getenv("DB_HOST") . "<br>";
+echo getenv("DB_PORT") . "<br>";
+echo getenv("DB_NAME") . "<br>";
+echo getenv("DB_USER") . "<br>";
+echo getenv("DB_PASS") . "<br>";
+
 // Verifica se todas as variáveis estão carregadas
 if (!$host || !$port || !$dbname || !$user || !$pass) {
     die("Erro: Uma ou mais variáveis de ambiente não estão definidas.");
