@@ -5,7 +5,7 @@ include '../conexao.php'; // Conexão com PDO
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-
+ 
     // Prepara e executa a consulta
     $sql = "SELECT id, nome, senha FROM Professor WHERE email_institucional = :email";
     $stmt = $conn->prepare($sql);

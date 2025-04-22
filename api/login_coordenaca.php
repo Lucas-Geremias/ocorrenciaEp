@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['coordenacao_id'] = $user['id'];
                 $_SESSION['nome'] = $user['nome'];
                 $_SESSION['admin'] = true; // Define como admin
-                header("Location: /ocorrenciamain/public/geral.html"); // Redireciona para a área administrativa
+                header("Location: /ocorrenciamain/geral.html"); // Redireciona para a área administrativa
                 exit();
             } else {
                 $erro = "Email ou senha inválidos!";
