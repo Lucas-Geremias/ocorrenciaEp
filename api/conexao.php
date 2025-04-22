@@ -4,6 +4,11 @@ require_once __DIR__ . '/php/vendor/autoload.php';
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/php');
+$envPath = __DIR__ . '/php/.env';
+echo "Verificando caminho do .env: $envPath\n";
+if (!file_exists($envPath)) {
+    die("Arquivo .env não encontrado.");
+}
 $dotenv->load();
 
 
