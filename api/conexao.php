@@ -5,8 +5,7 @@ use Dotenv\Dotenv; // Importa a classe corretamente
 
 $dotenv = Dotenv::createImmutable(__DIR__); // Carrega o .env da pasta onde está esse arquivo
 $dotenv->load();
-var_dump($_ENV); // ou var_dump($_ENV['DB_HOST']);
-exit;
+
 // Agora você pode usar as variáveis de ambiente
 $host = getenv("DB_HOST");
 $port = getenv("DB_PORT");
