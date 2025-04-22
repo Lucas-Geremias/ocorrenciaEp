@@ -1,18 +1,10 @@
 <?php
 require_once __DIR__ . '/php/vendor/autoload.php'; // Caminho até o autoload.php
 
-use Dotenv\Dotenv; // Tem que vir logo após o autoload
+use Dotenv\Dotenv; // Importa a classe corretamente
 
-$dotenv = Dotenv::createImmutable(__DIR__); // Usa a classe corretamente
+$dotenv = Dotenv::createImmutable(__DIR__); // Carrega o .env da pasta onde está esse arquivo
 $dotenv->load();
-$envPath = __DIR__ . '/php/.env';
-echo "Verificando caminho do .env: $envPath\n";
-if (!file_exists($envPath)) {
-    die("Arquivo .env não encontrado.");
-}
-$dotenv->load();
-
-
 // Agora você pode usar as variáveis de ambiente
 $host = getenv("DB_HOST");
 $port = getenv("DB_PORT");
