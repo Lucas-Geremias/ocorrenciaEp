@@ -1,9 +1,10 @@
 <?php
-require_once __DIR__ . '/php/vendor/autoload.php';
+require_once __DIR__ . '/php/vendor/autoload.php'; // Caminho até o autoload.php
 
-use Dotenv\Dotenv;
+use Dotenv\Dotenv; // Tem que vir logo após o autoload
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/php');
+$dotenv = Dotenv::createImmutable(__DIR__); // Usa a classe corretamente
+$dotenv->load();
 $envPath = __DIR__ . '/php/.env';
 echo "Verificando caminho do .env: $envPath\n";
 if (!file_exists($envPath)) {
